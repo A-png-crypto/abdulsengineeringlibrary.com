@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Abdul's Engineering Library</title>
+    <style>
+        /* CSS Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            background-color: #f8f9fa;
+        }
+        header {
+            background: #0078d4;
+            color: white;
+            padding: 1rem 0;
+            text-align: center;
+        }
+        header h1 {
+            margin: 0;
+        }
+        main {
+            padding: 2rem;
+        }
+        .search-section {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        .search-section input {
+            width: 50%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .search-section button {
+            padding: 10px 20px;
+            margin-left: 5px;
+            border: none;
+            background: #0078d4;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .book-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        .book-item {
+            background: white;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .book-item h3 {
+            margin: 0 0 10px 0;
+            color: #0078d4;
+        }
+        .book-item p {
+            margin: 5px 0;
+        }
+        .book-item button {
+            background: #ff9800;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- HTML Content -->
+    <header>
+        <h1> Fourah Bay College Engineering Department Library</h1>
+    </header>
+
+    <main>
+        <section class="search-section">
+            <h2>Search for a Book</h2>
+            <input type="text" id="searchInput" placeholder="Enter book title or author">
+            <button onclick="searchBooks()">Search</button>
+        </section>
+
+        <section class="book-list" id="bookList">
+            <!-- Book items will be populated dynamically -->
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Abdul's Engineering Department Library. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // JavaScript Code
+        const books = [
+            { title: "Introduction to Electrical Engineering", author: "John Smith", year: 2021 },
+            { title: "Mechanical Design Fundamentals", author: "Jane Doe", year: 2020 },
+            { title: "Civil Engineering Basics", author: "Mark Johnson", year: 2019 },
+            { title: "Software Development Practices", author: "Emily Davis", year: 2022 },
+            { title: "Thermodynamics Made Easy", author: "Alice Brown", year: 2018 }
+        ];
+
+        function displayBooks(bookArray) {
+            const bookList = document.getElementById('bookList');
+            bookList.innerHTML = '';
+
+            if (bookArray.length === 0) {
+                bookList.innerHTML = `<p>No books found.</p>`;
+                return;
+            }
+
+            bookArray.forEach(book => {
+                const bookItem = document.createElement('div');
+                bookItem.className = 'book-item';
+                bookItem.innerHTML = `
+                    <h3>${book.title}</h3>
+                    <p><strong>Author:</strong> ${book.author}</p>
+                    <p><strong>Year:</strong> ${book.year}</p>
+                    <button onclick="requestBook('${book.title}')">Request</button>
+                `;
+                bookList.appendChild(bookItem);
+            });
+        }
+
+        function searchBooks() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const filteredBooks = books.filter(book => 
+                book.title.toLowerCase().includes(query) || 
+                book.author.toLowerCase().includes(query)
+            );
+            displayBooks(filteredBooks);
+        }
+
+        function requestBook(title) {
+            alert(`You have requested the book: "${title}". The library team will get back to you.`);
+        }
+
+        // Display all books on page load
+        displayBooks(books);
+    </script>
+</body>
+</html>
